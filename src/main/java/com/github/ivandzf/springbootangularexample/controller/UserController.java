@@ -1,8 +1,7 @@
 package com.github.ivandzf.springbootangularexample.controller;
 
 import com.github.ivandzf.springbootangularexample.entity.User;
-import com.github.ivandzf.springbootangularexample.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.github.ivandzf.springbootangularexample.service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,21 +20,21 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    private final UserRepository userRepository;
+    private final UserService userService;
 
-    public UserController(UserRepository userRepository) {
-        this.userRepository = userRepository;
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
 
     @GetMapping("/findall")
     private ResponseEntity<List<User>> findAllUser() {
-        return new ResponseEntity<>(userRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findAll(), HttpStatus.OK);
     }
 
     @PostMapping("/save")
     @ResponseStatus(HttpStatus.CREATED)
     private void saveUser(@Valid @RequestBody User user) {
-        userRepository.save(user);
+        userService.saveUser(user);
     }
 
 }
